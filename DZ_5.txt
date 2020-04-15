@@ -1,0 +1,474 @@
+==============================================
+-  Створити функцію конструктор для об'єкту який описує теги
+Властивості
+ -назва тегу
+ - опис його дій
+ - масив з атрибутами (2-3 атрибути максимум)
+ Кожен атрибут описати як окремий який буде містити
+ -назву атрибуту
+ -опис дії атрибуту
+ інформацію брати з htmlbook.ru
+
+ Таким чином описати теги
+ -a
+ -div
+ -h1
+ -span
+ -input
+ -form
+ -option
+ -select
+ Приклад результату
+   {
+        titleOfTag: 'area',
+        action: `Каждый элемент <area> определяет активные области изображения, которые являются ссылками...`,
+        attrs: [
+        {titleOfAttr: 'accesskey', actionOfAttr: 'Переход к области с помощью комбинации клавиш'},
+        {/*some props and values*/},
+        {/*...*/},
+        {/*...*/},
+        ]
+
+   }
+==============================================
+
+function Tag(titleOfTag, action, attrs) {
+    this.titleOfTag = titleOfTag;
+    this.action = action;
+    this.attrs = attrs;
+
+    this.info = function() {
+        console.log(this)
+    }
+}
+
+function Attr(titleOfAttr, actionOfAttr) {
+    this.titleOfAttr = titleOfAttr;
+    this.actionOfAttr = actionOfAttr;
+    
+    this.attrsArray = function(attrs) {
+        attrs.push(this);
+    }
+}
+
+let attrsA = [];
+const attrA1 = new Attr("accesskey", "Активация ссылки с помощью комбинации клавиш.");
+attrA1.attrsArray(attrsA);
+const attrA2 = new Attr("coords", "Устанавливает координаты активной области.");
+attrA2.attrsArray(attrsA);
+
+const tagA = new Tag( "a", "Тег <a> является одним из важных элементов HTML и предназначен для создания ссылок.", attrsA);
+tagA.info();
+
+let attrsDiv = [];
+const attrDiv1 = new Attr("align", "Задает выравнивание содержимого тега <div>.");
+attrDiv1.attrsArray(attrsDiv);
+const attrDiv2 = new Attr("title", "Добавляет всплывающую подсказку к содержимому.");
+attrDiv2.attrsArray(attrsDiv);
+
+const tagDiv = new Tag( "div", "Элемент <div> является блочным элементом и предназначен для выделения фрагмента документа с целью изменения вида содержимого.", attrsDiv);
+tagDiv.info();
+
+let attrsH = [];
+const attrH1 = new Attr("class", "Определяет имя класса, которое позволяет связать тег со стилевым оформлением.");
+attrH1.attrsArray(attrsH);
+const attrH2 = new Attr("contenteditable", "Сообщает, что элемент доступен для редактирования пользователем.");
+attrH2.attrsArray(attrsH);
+
+const tagH1 = new Tag( "h1", "HTML предлагает шесть заголовков разного уровня, которые показывают относительную важность секции, расположенной после заголовка.", attrsH);
+tagH1.info();
+
+let attrsSpan = [];
+const attrSpan1 = new Attr("class", "Определяет имя класса, которое позволяет связать тег со стилевым оформлением.");
+attrSpan1.attrsArray(attrsSpan);
+const attrSpan4 = new Attr("hidden", "Скрывает содержимое элемента от просмотра.");
+attrSpan4.attrsArray(attrsSpan);
+
+const tagSpan = new Tag( "span", "Тег <span> предназначен для определения строчных элементов документа.", attrsSpan);
+tagSpan.info();
+
+let attrsInput = [];
+const attrInput1 = new Attr("autofocus", "Устанавливает фокус в поле формы.");
+attrInput1.attrsArray(attrsInput);
+const attrInput2 = new Attr("size", "Ширина текстового поля.");
+attrInput2.attrsArray(attrsInput);
+
+const tagInput = new Tag( "input", "Тег <input> является одним из разносторонних элементов формы и позволяет создавать разные элементы.", attrsInput);
+tagInput.info();
+
+let attrsForm = [];
+const attrForm3 = new Attr("dir", "Задает направление и отображение текста — слева направо или справа налево.");
+attrForm3.attrsArray(attrsForm);
+const attrForm4 = new Attr("hidden", "Скрывает содержимое элемента от просмотра.");
+attrForm4.attrsArray(attrsForm);
+
+const tagForm = new Tag( "form", "Связывает поле с формой по её идентификатору. ", attrsForm);
+tagForm.info();
+
+let attrsOption = [];
+const attrOption1 = new Attr("contextmenu", "Сообщает, что элемент доступен для редактирования пользователем.");
+attrOption1.attrsArray(attrsOption);
+const attrOption2 = new Attr("lang", "Браузер использует значение параметра для правильного отображения некоторых национальных символов.");
+attrOption2.attrsArray(attrsOption);
+
+const tagOption = new Tag( "options", "Тег <option> определяет отдельные пункты списка, создаваемого с помощью контейнера ", attrsOption);
+tagOption.info();
+
+let attrsSelect = [];
+const attrSelect1 = new Attr("dmultipleir", "Позволяет загрузить несколько файлов одновременно.");
+attrSelect1.attrsArray(attrsSelect);
+const attrSelect2 = new Attr("maxlength", "Максимальное количество символов разрешенных в тексте.");
+attrSelect2.attrsArray(attrsSelect);        
+
+const tagSelect = new Tag( "select", "Тег <select> позволяет создать элемент интерфейса в виде раскрывающегося списка.", attrsSelect);
+tagSelect.info();
+
+
+
+==============================================
+-  Створити класс  для об'єкту який описує теги
+Властивості
+ -назва тегу
+ - опис його дій
+ - масив з атрибутами (2-3 атрибути максимум)
+ Кожен атрибут описати як окремий який буде містити
+ -назву атрибуту
+ -опис дії атрибуту
+ інформацію брати з htmlbook.ru
+
+ Таким чином описати теги
+ -a
+ -div
+ -h1
+ -span
+ -input
+ -form
+ -option
+ -select
+ Приклад результату
+   {
+        titleOfTag: 'area',
+        action: `Каждый элемент <area> определяет активные области изображения, которые являются ссылками...`,
+        attrs: [
+        {titleOfAttr: 'accesskey', actionOfAttr: 'Переход к области с помощью комбинации клавиш'},
+        {/*some props and values*/},
+        {/*...*/},
+        {/*...*/},
+        ]
+
+   }
+==============================================
+
+class Tag {
+    constructor(titleOfTag, action, attrs) {
+        this.titleOfTag = titleOfTag;
+        this.action = action;
+        this.attrs = attrs;
+    }
+    info() {
+        console.log(this)
+    }
+}
+
+class Attr {
+    constructor(titleOfAttr, actionOfAttr) {
+        this.titleOfAttr = titleOfAttr;
+        this.actionOfAttr = actionOfAttr;
+    }
+    attrsArray(attrs) {
+        attrs.push(this);
+    }
+}
+
+let attrsA = [];
+const attrA1 = new Attr("accesskey", "Активация ссылки с помощью комбинации клавиш.");
+attrA1.attrsArray(attrsA);
+const attrA2 = new Attr("coords", "Устанавливает координаты активной области.");
+attrA2.attrsArray(attrsA);
+
+const tagA = new Tag( "a", "Тег <a> является одним из важных элементов HTML и предназначен для создания ссылок.", attrsA);
+tagA.info();
+
+let attrsDiv = [];
+const attrDiv1 = new Attr("align", "Задает выравнивание содержимого тега <div>.");
+attrDiv1.attrsArray(attrsDiv);
+const attrDiv2 = new Attr("title", "Добавляет всплывающую подсказку к содержимому.");
+attrDiv2.attrsArray(attrsDiv);
+
+const tagDiv = new Tag( "div", "Элемент <div> является блочным элементом и предназначен для выделения фрагмента документа с целью изменения вида содержимого.", attrsDiv);
+tagDiv.info();
+
+let attrsH = [];
+const attrH1 = new Attr("class", "Определяет имя класса, которое позволяет связать тег со стилевым оформлением.");
+attrH1.attrsArray(attrsH);
+const attrH2 = new Attr("contenteditable", "Сообщает, что элемент доступен для редактирования пользователем.");
+attrH2.attrsArray(attrsH);
+
+const tagH1 = new Tag( "h1", "HTML предлагает шесть заголовков разного уровня, которые показывают относительную важность секции, расположенной после заголовка.", attrsH);
+tagH1.info();
+
+let attrsSpan = [];
+const attrSpan1 = new Attr("class", "Определяет имя класса, которое позволяет связать тег со стилевым оформлением.");
+attrSpan1.attrsArray(attrsSpan);
+const attrSpan4 = new Attr("hidden", "Скрывает содержимое элемента от просмотра.");
+attrSpan4.attrsArray(attrsSpan);
+
+const tagSpan = new Tag( "span", "Тег <span> предназначен для определения строчных элементов документа.", attrsSpan);
+tagSpan.info();
+
+let attrsInput = [];
+const attrInput1 = new Attr("autofocus", "Устанавливает фокус в поле формы.");
+attrInput1.attrsArray(attrsInput);
+const attrInput2 = new Attr("size", "Ширина текстового поля.");
+attrInput2.attrsArray(attrsInput);
+
+const tagInput = new Tag( "input", "Тег <input> является одним из разносторонних элементов формы и позволяет создавать разные элементы.", attrsInput);
+tagInput.info();
+
+let attrsForm = [];
+const attrForm3 = new Attr("dir", "Задает направление и отображение текста — слева направо или справа налево.");
+attrForm3.attrsArray(attrsForm);
+const attrForm4 = new Attr("hidden", "Скрывает содержимое элемента от просмотра.");
+attrForm4.attrsArray(attrsForm);
+
+const tagForm = new Tag( "form", "Связывает поле с формой по её идентификатору. ", attrsForm);
+tagForm.info();
+
+let attrsOption = [];
+const attrOption1 = new Attr("contextmenu", "Сообщает, что элемент доступен для редактирования пользователем.");
+attrOption1.attrsArray(attrsOption);
+const attrOption2 = new Attr("lang", "Браузер использует значение параметра для правильного отображения некоторых национальных символов.");
+attrOption2.attrsArray(attrsOption);
+
+const tagOption = new Tag( "options", "Тег <option> определяет отдельные пункты списка, создаваемого с помощью контейнера ", attrsOption);
+tagOption.info();
+
+let attrsSelect = [];
+const attrSelect1 = new Attr("dmultipleir", "Позволяет загрузить несколько файлов одновременно.");
+attrSelect1.attrsArray(attrsSelect);
+const attrSelect2 = new Attr("maxlength", "Максимальное количество символов разрешенных в тексте.");
+attrSelect2.attrsArray(attrsSelect);        
+
+const tagSelect = new Tag( "select", "Тег <select> позволяет создать элемент интерфейса в виде раскрывающегося списка.", attrsSelect);
+tagSelect.info();
+
+
+
+==============================================
+- Створити об'єкт car, з властивостями модель, виробник, рік випуску, максимальна швидкість, об'єм двигуна. додати в об'єкт функції:
+-- drive () - яка виводить в консоль "їдемо зі швидкістю {максимальна швидкість} на годину"
+-- info () - яка виводить всю інформацію про автомобіль
+-- increaseMaxSpeed (newSpeed) - яка підвищує значення максимальної швидкості на значення newSpeed
+-- changeYear (newValue) - змінює рік випуску на значення newValue
+-- addDriver (driver) - приймає об'єкт який "водій" з довільним набором полів, і доавляет його в поточний об'єкт car
+==============================================
+
+const car = {
+    model: "Mersedes",
+    manufacturer: "Germany",
+    year: 1999,
+    maxSpeed: 200,
+    engineVolume: 4.5,
+
+    drive: function() {
+        console.log(`їдемо зі швидкістю ${this.maxSpeed} на годину`)
+    },
+    info: function() {
+        console.log(this)
+    },
+    increaseMaxSpeed: function(newSpeed) {
+        this.maxSpeed = this.maxSpeed + newSpeed
+    },
+    changeYear: function(newValue) {
+        this.year = newValue
+    },
+    addDriver: function(driver) {
+        this.driver = driver
+    }
+}
+
+==============================================
+- Створити функцію конструктор яка дозволяє створювати об'єкти car, з властивостями модель, виробник, рік випуску, максимальна швидкість, об'єм двигуна. додати в об'єкт функції:
+-- drive () - яка виводить в консоль "їдемо зі швидкістю {максимальна швидкість} на годину"
+-- info () - яка виводить всю інформацію про автомобіль
+-- increaseMaxSpeed (newSpeed) - яка підвищує значення максимальної швидкості на значення newSpeed
+-- changeYear (newValue) - змінює рік випуску на значення newValue
+-- addDriver (driver) - приймає об'єкт який "водій" з довільним набором полів, і доавляет його в поточний об'єкт car
+==============================================
+
+function Car(model, manufacturer, year, maxSpeed, engineVolume) {
+    this.model = model,
+    this.manufacturer = manufacturer;
+    this.year = year;
+    this.maxSpeed = maxSpeed;
+    this.engineVolume = engineVolume;
+
+    this.drive = function() {
+        console.log(`їдемо зі швидкістю ${this.maxSpeed} на годину`)
+    };
+    this.info = function() {
+        console.log(this)
+    };
+    this.increaseMaxSpeed = function(newSpeed) {
+        this.maxSpeed = this.maxSpeed + newSpeed
+    };
+    this.changeYear = function(newValue) {
+        this.year = newValue
+    };
+    this.addDriver = function(driver) {
+        this.driver = driver
+    }
+}
+
+const car = new Car("Shkoda", "Czech Republic", 2004, 170, 2.5);
+
+==============================================
+- Створити клас який дозволяє створювати об'єкти car, з властивостями модель, виробник, рік випуску, максимальна швидкість, об'єм двигуна. додати в об'єкт функції:
+-- drive () - яка виводить в консоль "їдемо зі швидкістю {максимальна швидкість} на годину"
+-- info () - яка виводить всю інформацію про автомобіль
+-- increaseMaxSpeed (newSpeed) - яка підвищує значення максимальної швидкості на значення newSpeed
+-- changeYear (newValue) - змінює рік випуску на значення newValue
+-- addDriver (driver) - приймає об'єкт який "водій" з довільним набором полів, і доавляет його в поточний об'єкт car
+==============================================
+
+class Car {
+    constructor(model, manufacturer, year, maxSpeed, engineVolume) {
+        this.model = model,
+        this.manufacturer = manufacturer;
+        this.year = year;
+        this.maxSpeed = maxSpeed;
+        this.engineVolume = engineVolume;
+    }
+
+    drive() {
+        console.log(`їдемо зі швидкістю ${this.maxSpeed} на годину`)
+    };
+    info() {
+        console.log(this)
+    };
+    increaseMaxSpeed(newSpeed) {
+        this.maxSpeed = this.maxSpeed + newSpeed
+    };
+    changeYear(newValue) {
+        this.year = newValue
+    };
+    addDriver(driver) {
+        this.driver = driver
+    }
+}
+
+==============================================
+-створити класс попелюшка з полями ім'я, вік, розмір ноги
+--Створити 10 попелюшок , покласти їх в масив
+--Сторити об'єкт класу "принц" за допомоги класу який має поля ім'я, вік, туфелька яку він знайшов.
+-- за допоиоги циклу знайти яка попелюшка повинна бути з принцом
+==============================================
+
+let cinderellas = [];
+
+class Prince {
+    constructor(name, age, footSize) {
+        this.name = name,
+        this.age = age;
+        this.footSize = footSize;
+    }
+}
+
+class Cinderella {
+    constructor(name, age, footSize) {
+        this.name = name,
+        this.age = age;
+        this.footSize = footSize;
+    }
+
+    cinderellasArray() {
+        cinderellas.push(this);
+    }
+}
+
+const prince = new Prince("Vasya", 35, 39);
+
+const cinderella1 = new Cinderella("Natali", 24, 35);
+cinderella1.cinderellasArray();
+const cinderella2 = new Cinderella("Olga", 29, 38);
+cinderella2.cinderellasArray();
+const cinderella3 = new Cinderella("Irina", 26, 37);
+cinderella3.cinderellasArray();
+const cinderella4 = new Cinderella("Oksana", 33, 36);
+cinderella4.cinderellasArray();
+const cinderella5 = new Cinderella("Karina", 27, 35.5);
+cinderella5.cinderellasArray();
+const cinderella6 = new Cinderella("Katya", 40, 38.5);
+cinderella6.cinderellasArray();
+const cinderella7 = new Cinderella("Kira", 34, 40);
+cinderella7.cinderellasArray();
+const cinderella8 = new Cinderella("Mariya", 32, 41);
+cinderella8.cinderellasArray();
+const cinderella9 = new Cinderella("Klava", 28, 39);
+cinderella9.cinderellasArray();
+const cinderella10 = new Cinderella("Sveta", 21, 36.5);
+cinderella10.cinderellasArray();
+
+for (const iterator of cinderellas) {
+    if (iterator.footSize === prince.footSize) {
+        console.log(`Вашу золушку зовут ${iterator.name}`);
+    }
+}
+
+==============================================
+-створити функцію конструктор попелюшка з полями ім'я, вік, розмір ноги
+--Створити 10 попелюшок , покласти їх в масив
+--Сторити об'єкт типу "принц" за допомоги функції конструктора з полями ім'я, вік, туфелька яку він знайшов, та функцію "пошук попелюшки"
+-- функція повинна приймати масив попелюшок, та шукає ту котра йому підходить
+==============================================
+
+let cinderellas = [];
+
+function Prince(name, age, footSize) {
+    this.name = name,
+    this.age = age;
+    this.footSize = footSize;
+
+    this.search = function(array) {
+        for (const iterator of array) {
+            if (iterator.footSize === this.footSize) {
+                console.log(`Вашу золушку зовут ${iterator.name}`);
+            }
+        }
+    }
+}
+
+function Cinderella(name, age, footSize) {
+    this.name = name,
+    this.age = age;
+    this.footSize = footSize;
+    
+    this.cinderellasArray = function() {
+        cinderellas.push(this);
+    }
+}
+
+const prince = new Prince("Vasya", 35, 40);
+
+const cinderella1 = new Cinderella("Natali", 24, 35);
+cinderella1.cinderellasArray();
+const cinderella2 = new Cinderella("Olga", 29, 38);
+cinderella2.cinderellasArray();
+const cinderella3 = new Cinderella("Irina", 26, 37);
+cinderella3.cinderellasArray();
+const cinderella4 = new Cinderella("Oksana", 33, 36);
+cinderella4.cinderellasArray();
+const cinderella5 = new Cinderella("Karina", 27, 35.5);
+cinderella5.cinderellasArray();
+const cinderella6 = new Cinderella("Katya", 40, 38.5);
+cinderella6.cinderellasArray();
+const cinderella7 = new Cinderella("Kira", 34, 40);
+cinderella7.cinderellasArray();
+const cinderella8 = new Cinderella("Mariya", 32, 41);
+cinderella8.cinderellasArray();
+const cinderella9 = new Cinderella("Klava", 28, 39);
+cinderella9.cinderellasArray();
+const cinderella10 = new Cinderella("Sveta", 21, 36.5);
+cinderella10.cinderellasArray();
+
+prince.search(cinderellas);
