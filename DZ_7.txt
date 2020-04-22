@@ -1,0 +1,414 @@
+- Создать произвольный елемент с id = text.  Используя JavaScript, сделайте так, чтобы при клике на кнопку исчезал элемент с id="text".
+
+const butt = document.getElementById("btn");
+const divka = document.getElementById("text");
+
+butt.onclick = () => {
+    divka.style.display = "none"
+};
+
+- Создайте кнопку, при клике на которую, она будет скрывать сама себя.
+
+const butt = document.getElementById("btn");
+
+butt.onclick = () => {
+    butt.style.display = "none"
+};
+
+- створити інпут який приймає вік людини та кнопку яка підтверджує дію.При натисканні на кнопку зчитати інформацію з інпуту та перевірити вік чи меньше він ніж 18, та повідомити про це користувача
+
+const inputData = document.getElementById("text");
+const submitBtn = document.getElementById("btn");
+
+submitBtn.onclick = () => {
+    if (inputData.value < 18) {
+        alert("Вы слишком молоды!")
+    } else {
+        alert("Добро пожаловать!")
+    }
+}
+
+- Создайте меню, которое раскрывается/сворачивается при клике
+
+<ul class="outerUl">
+    <li>Name1</li>
+    <li>Name2</li>
+    <li id="meny">Name3
+        <ul id="innerUl">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </li>
+    <li>Name4</li>
+    <li>Name5</li>
+</ul>
+    
+.outerUl {
+    display: flex;
+    list-style: none;
+}
+
+#innerUl {
+    display: none;
+}
+
+<script>
+const innerMeny = document.getElementById("meny");
+const innerUl = document.getElementById("innerUl");
+let check = true;
+
+innerMeny.onclick = () => {
+    if (check) {
+        innerUl.style.display = "block";
+        check = false;
+    } else {
+        innerUl.style.display = "none";
+        check = true;
+    }
+}
+</script>
+
+- Создать список комментариев , пример объекта коментария - {title : 'lorem', body:'lorem ipsum dolo sit ameti'}.
+Вывести список комментариев в документ, каждый в своем блоке.
+ Добавьте каждому комментарию по кнопке для сворачивания его body.
+
+const comments = [{title : 'Comment lorem 1', body:'lorem1 ipsum dolo sit ameti'}, {title : 'Comment lorem 2', body:'lorem2 ipsum dolo sit ameti'}, {title : 'Comment lorem 3', body:'lorem3 ipsum dolo sit ameti'}, {title : 'Comment lorem 4', body:'lorem4 ipsum dolo sit ameti'}];
+function commentsInput(array) {
+    for (const iterator of array) {
+        const divka = document.createElement("div");
+        document.body.appendChild(divka);
+        divka.style.border = "3px solid green"
+        const titleP = document.createElement("p")
+        divka.appendChild(titleP);
+        titleP.innerText = iterator.title;
+        const bodyP = document.createElement("p");
+        divka.appendChild(bodyP);
+        bodyP.innerText = iterator.body;
+        const butt = document.createElement("button"); 
+        divka.appendChild(butt);
+        butt.innerText = "Disappear";
+        butt.onclick = () => {
+            bodyP.style.display = "none"
+        }
+    }
+}
+
+- створити 2 форми  по 2 інпути в кожній. ствоирити кнопку при кліку на яку считується та виводиться на консоль інформація з цих 2х форм.
+Кнопка повинна лежати за межами форм (Щоб ьуникнути  перезавантаження сторінки)
+Доступ до інпутів через Forms API. Отже дайте формі та інпутам всі необхідні атрибути.
+
+<form name="user">
+    <input type="text"name="name">
+    <input type="number"name="age">
+</form>
+
+<form name="skills">
+    <input type="text" name="skillName">
+    <textarea name="skillDescription" cols="30" rows="10"></textarea>
+</form>
+
+<button id="btn">Submit</button>
+
+
+const submitBtn = document.getElementById("btn");
+const userForms = document.forms
+
+submitBtn.onclick = () => {
+    let formsContent = "";
+    for (const iterator of userForms) {
+        for (const iter of iterator) {
+            formsContent = `${formsContent} ${iter.value}`;                        
+        }
+    }
+    console.log(formsContent);   
+}
+
+- Створити функцію, яка генерує таблицю.
+Перший аргумент визначає кількість строк.
+Другий параметр визначає кліькіть ячеєк в кожній строці.
+Третій параметр визначає елемент в який потрібно таблицю додати.
+
+function createTable (trNumber, tdNumber, targetTag) {
+    const target = document.createElement(targetTag);
+    document.body.appendChild(target);
+    const table = document.createElement("table");
+    target.appendChild(table);
+    table.style.borderCollapse = "collapse";
+    for (let i = 0; i < trNumber; i++) {
+        const tableRow = document.createElement("tr");
+        tableRow.style.border = "3px solid green";
+        table.appendChild(tableRow);
+        for (let a = 0; a < tdNumber; a++) {
+            const tableColumn = document.createElement("td");
+            tableColumn.style.border = "3px solid green";
+            tableColumn.style.height = "20px";
+            tableColumn.style.width = "50px"
+            tableRow.appendChild(tableColumn);        
+        }           
+    }
+}
+
+- Створити 3 инпута та кнопку. Один визначає кількість рядків, другий - кількість ячеєк, третій вмиіст ячеєк.
+При натисканні кнопки, вся ця інформація зчитується і формується табличка, з відповідним вмістом.
+(Додатковачастина для завдання)
+
+<input type="number"name="tr">
+<input type="number"name="td">
+<input type="text" name="text">
+<button id="btn">Submit</button>
+
+
+const submitBtn = document.getElementById("btn");
+const trNumber = document.getElementsByName("tr");
+const tdNumber = document.getElementsByName("td");
+const tableText = document.getElementsByName("text");
+
+submitBtn.onclick = () => {
+    const table = document.createElement("table");
+    document.body.appendChild(table);
+    table.style.borderCollapse = "collapse";
+    for (let i = 0; i < trNumber[0].value; i++) {
+        const tableRow = document.createElement("tr");
+        tableRow.style.border = "3px solid green";
+        table.appendChild(tableRow);
+        for (let a = 0; a < tdNumber[0].value; a++) {
+            const tableColumn = document.createElement("td");
+            tableColumn.style.border = "3px solid green";
+            tableColumn.style.height = "20px";
+            tableColumn.style.width = "50px"
+            tableRow.appendChild(tableColumn);
+            tableColumn.innerText = tableText[0].value;           
+        }           
+    }
+}
+
+
+- Напишите «Карусель» – ленту изображений, которую можно листать влево-вправо нажатием на стрелочки.
+
+const contayner = document.createElement("div");
+contayner.style.height = "400px";
+contayner.style.width = "400px";
+contayner.style.display = "flex";
+document.body.appendChild(contayner)
+const lastPhoto = 5;
+for (let i = 1; i <= lastPhoto; i++) {
+    const divka = document.createElement("div");
+    divka.id = i;
+    divka.style.height = "400px";
+    divka.style.width = "400px";
+    divka.style.display = "flex";
+    divka.style.alignItems = "center"
+    divka.style.justifyContent = "space-between"
+    divka.style.border = "3px solid red"
+    const photo = document.createElement("img")
+    divka.style.background = `url(Img/Photo${i}.jpg)`;
+    nextBtn = document.createElement("button");
+    nextBtn.innerText = "Next"
+    privBtn = document.createElement("button");
+    privBtn.innerText = "Previous"
+    divka.appendChild(privBtn)
+    divka.appendChild(nextBtn)
+    nextBtn.style.display = "none"
+    privBtn.style.display = "none"
+    
+    if (i > 1) {
+        divka.style.display = "none"
+    }
+    contayner.appendChild(divka)
+    
+    divka.onmouseenter = (ev) => {
+        
+        switch(+divka.id) {
+            case 1:
+            for (const iterator of ev.target.children) {
+                
+                if (iterator.innerText === "Previous") {
+                    iterator.style.display = "none"
+                } else {
+                    iterator.style.display = "block"
+                    divka.style.justifyContent = "flex-end"
+                }
+            }
+            break
+            case lastPhoto:
+            
+            for (const iterator of ev.target.children) {
+                
+                if (iterator.innerText === "Next") {
+                    iterator.style.display = "none"
+                } else {
+                    iterator.style.display = "block"
+                }
+            }
+            break
+            default:
+            for (const iterator of ev.target.children) {
+                iterator.style.display = "block"
+            }
+        }
+    }
+
+    divka.onmouseleave = (ev) => {
+        for (const iterator of ev.target.children) {
+            iterator.style.display = "none"
+        }
+    }
+
+    nextBtn.onclick = (ev) => {
+        ev.target.parentElement.style.display = "none";
+        const id = +ev.target.parentElement.id + 1
+        const nextDivka = document.getElementById(`${id}`);
+        nextDivka.style.display = "flex"
+    }
+
+    privBtn.onclick = (ev) => {
+        ev.target.parentElement.style.display = "none";
+        const id = +ev.target.parentElement.id - 1
+        const nextDivka = document.getElementById(`${id}`);
+        nextDivka.style.display = "flex"
+    }
+}
+
+- Сворити масив не цензцрних слів.
+Сворити інпут текстового типу.
+Якщо людина вводить слово і воно міститься в масиві не цензурних слів
+кинути алерт з попередженням.
+Перевірку робити при натисканні на кнопку
+
+<input type="text" id="text">
+<button id="btn">Submit</button>   
+
+<script>
+
+const badWords = ["сука", "пидарас", "пидар", "хуй", "блядь", "гандон"];
+
+const inputData = document.getElementById("text");
+const submitBtn = document.getElementById("btn");
+
+submitBtn.onclick = () => {
+    for (const iterator of badWords) {
+        if (inputData.value === iterator) {
+            alert("Нецензурная лексика запрещена!")
+        }
+    }
+}
+
+</script>
+
+- Сворити масив не цензцрних слів.
+Сворити інпут текстового типу.
+Потрібно перевіряти чи не містить ціле речення в собі погані слова.
+Кинути алерт з попередженням у випадку якщо містить.
+Перевірку робити при натисканні на кнопку
+
+submitBtn.onclick = () => {
+    for (const iterator of badWords) {
+        if (inputData.value.includes(iterator)) {
+            alert("Нецензурная лексика запрещена!")
+        }
+    }
+}
+
+-- создать скрипт, который берет считывает на странице (rules.html) текст и делает сбоку меню-оглавление по всем заголовкам которые есть в тексте.
+При клике на пункт оглавления вы должны отправляться к этому пункту в тексте
+
+const arrayTegH2 = document.getElementsByTagName("h2");
+const navigation = document.getElementById("content");
+const rules = document.getElementById("wrap");
+const tagUl = document.createElement("ul");
+for (let i = 0; i < arrayTegH2.length; i++) {
+    const tagLi = document.createElement("li");
+    const tagA = document.createElement("a");
+    let anchor = `anchor${i}`;
+    tagA.href = `#${anchor}`;
+    arrayTegH2[i].setAttribute("id", anchor);
+    tagA.innerHTML = arrayTegH2[i].innerText;
+    tagLi.appendChild(tagA);
+    tagUl.appendChild(tagLi);
+}
+navigation.appendChild(tagUl);
+const divkaFlex = document.createElement("div");
+divkaFlex.style.display = "flex";
+document.body.appendChild(divkaFlex);
+divkaFlex.appendChild(rules);
+divkaFlex.appendChild(navigation);
+
+-- взять массив пользователей
+let usersWithAddress = [
+                {id:1,name: 'vasya', age: 31, status: false, address: {city: 'Lviv', street: 'Shevchenko', number: 16}},
+                {id:2,name: 'petya', age: 30, status: true, address: {city: 'Kyiv', street: 'Shevchenko', number: 1}},
+                {id:3,name: 'kolya', age: 29, status: true, address: {city: 'Lviv', street: 'Shevchenko', number: 121}},
+                {id:4,name: 'olya', age: 28, status: false, address: {city: 'Ternopil', street: 'Shevchenko', number: 90}},
+                {id:5,name: 'max', age: 30, status: true, address: {city: 'Lviv', street: 'Shevchenko', number: 115}},
+                {id:6,name: 'anya', age: 31, status: false, address: {city: 'Kyiv', street: 'Shevchenko', number: 2}},
+                {id:7,name: 'oleg', age: 28, status: false, address: {city: 'Ternopil', street: 'Shevchenko', number: 22}},
+                {id:8,name: 'andrey', age: 29, status: true, address: {city: 'Lviv', street: 'Shevchenko', number: 43}},
+                {id:9,name: 'masha', age: 30, status: true, address: {city: 'Kyiv', street: 'Shevchenko', number: 12}},
+                {id:10,name: 'olya', age: 31, status: false, address: {city: 'Lviv', street: 'Shevchenko', number: 16}},
+                {id:11,name: 'max', age: 31, status: true, address: {city: 'Ternopil', street: 'Shevchenko', number: 121}}
+            ];
+Создать три чекбокса. Каждый из них активирует фильтр для вышеуказаного массива. Фильтры могут работать как вместе так и по отдельности.
+1й - отфильтровывает пользователей со статусом false (осталяет со статусом false)
+2й - оставляет старше 29 лет включительно
+3й - оставляет тех у кого город киев
+Данные выводить в документ
+
+<label for="1">Filter "status"</label>
+<input type="checkbox" name="filterOne" id="check1">
+<label for="2">Filter "age"</label>
+<input type="checkbox" name="filterTwo" id="check2">
+<label for="3">Filter "city"</label>
+<input type="checkbox" name="filterThree" id="check3">
+<button id="btn">Submit</button> 
+
+
+const filterFirst = document.getElementById("check1");
+const filterSecond = document.getElementById("check2");
+const filterThird = document.getElementById("check3");
+const buttonSubmit = document.getElementById("btn");
+const divkaReturn = document.createElement("div");
+document.body.appendChild(divkaReturn);
+buttonSubmit.onclick = () => {
+    let usersWithAddressFilter = usersWithAddress;
+    if (filterFirst.checked === true) {
+        usersWithAddressFilter = usersWithAddressFilter.filter((value) => {
+            if (value.status === false) {
+                return value;
+            };
+        })
+    };
+    if (filterSecond.checked === true) {
+        usersWithAddressFilter = usersWithAddressFilter.filter((value) => {
+            if (value.age >= 29) {
+                return value;
+            };
+        })
+    };
+    if (filterThird.checked === true) {
+        usersWithAddressFilter = usersWithAddressFilter.filter((value) => {
+            if (value.address.city === "Kyiv") {
+                return value;
+            };
+        })
+    };
+    
+    divkaReturn.innerText = "";
+    usersWithAddressFilter.forEach(element => {
+        divkaReturn.innerText = divkaReturn.innerText + JSON.stringify(element);
+        const br = document.createElement("br");
+        divkaReturn.appendChild(br);
+    });
+};
+
+*****(Прям овердоз с рекурсией) Создать функцию которая принимает какой-либо элемент DOM-структуры .Функция создает в боди 2 кнопки (назад/вперед)
+при нажатии вперед, вы переходите к дочернему элементу, при еще одном нажатии на "вперед", вы переходите к следующему дочернему элементу (лежащему на одном уровне)
+НО если у (какого-либо)дочеренего элемента есть дети, то нажатие "вперед" позволяет нам войти внутрь элемента и  выводит первого ребенка. и тд.
+Когда все дети заканчиваются, мы выходим из данного дочернего элемента и переходим к следующему, лежащему с ним на одном уровне
+
+
+*** При виділені сегменту тексту на сторінці він стає жирний/курсивний/або якось іншим способом змінює свій стан
+
+
