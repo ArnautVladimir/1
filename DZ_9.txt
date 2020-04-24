@@ -1,0 +1,323 @@
+Мають бути функції, які є асинхронними (мають сетТаймАут або сетІнтервал) які описують якусь певну вашу дію в день. 
+Наприклад функція прокинутись триває 1с, поїсти - 0,5с. Доїхати до роботи - 2с. Пообідати - 1с.
+Зробити таких функцій в районі 10 штук. Функція має приймати параметр, який буде відповідати за успішне чи не успішне виконання.
+Далі виконати їх в тій послідовності, в якій ви виконуєте їх у свій звичайний день.
+
+Тобто, як приклад
+Прокинулись - Поснідали - Зібрались - ПОїхали на роботу - Працююєте - Пообідали - Працюєте - Випили кави - Працюєте - Поїхали до дому - Повчились - Лягли спати.
+
+function myDay(time, message) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            time === 7
+            ? resolve(message)
+            : reject("Я проспал")
+        }, 500)
+    })
+}
+
+function breakfast(haveFood, food) {
+    console.log("Завтрак");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            haveFood
+            ? resolve(food)
+            : reject("Завтрак не готов")
+        }, 1000)
+    })
+}
+
+function goToWork(myWay, clear) {
+    console.log("На работу");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            myWay
+            ? resolve(clear)
+            : reject("Опять пробки")
+        }, 2000)
+    })
+}
+
+function myWork(electricity, workHard) {
+    console.log("Работа");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            electricity
+            ? resolve(workHard)
+            : reject("Ура домой")
+        }, 3000)
+    })
+}
+
+function lunchBreak(haveTime, dinner) {
+    console.log("Обед");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            haveTime
+            ? resolve(dinner)
+            : reject("Попью водички")
+        }, 1000)
+    })
+}
+
+function wayBackHome(transport, home) {
+    console.log("Домой");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            transport
+            ? resolve(home)
+            : reject("Ну когда приедет мой автобус")
+        }, 2000)
+    })
+}
+
+function haveSupper(supperIsReady, supper) {
+    console.log("Ужин");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            supperIsReady
+            ? resolve(supper)
+            : reject("Поужинаю после прогулки")
+        }, 1000)
+    })
+}
+
+function walkWithChild(weather, walk) {
+    console.log("Прогулка");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            weather
+            ? resolve(walk)
+            : reject("Дождь как жаль")
+        }, 1500)
+    })
+}
+
+function myStady(child, study) {
+    console.log("Учеба");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            child
+            ? resolve(study)
+            : reject("Ребенок не спит учебу отложим")
+        }, 3000)
+    })
+}
+
+function goToSleep(babySleep, sleep) {
+    console.log("Спать");
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            babySleep
+            ? resolve(sleep)
+            : reject("Ребенок еще не спит")
+        }, 500)
+    })
+}
+
+myDay(7, "Встал вовремя")
+    .then((result) => {
+        console.log(result);
+        return breakfast(true, "Спасибо за завтрак")
+    })
+    .then((result) => {
+        console.log(result);
+        return goToWork(true, "Успеть на работу")
+    })
+    .then((result) => {
+        console.log(result);
+        return myWork(true, "Продуктивная работа")
+    })
+    .then((result) => {
+        console.log(result);
+        return lunchBreak(true, "Приятного аппетита")
+    })
+    .then((result) => {
+        console.log(result);
+        return wayBackHome(true, "Быстрее домой")
+    })
+    .then((result) => {
+        console.log(result);
+        return haveSupper(true, "Спасибо за вкусный ужин")
+    })
+    .then((result) => {
+        console.log(result);
+        return walkWithChild(true, "Прекрасная прогулка")
+    })
+    .then((result) => {
+        console.log(result);
+        return myStady(true, "Хорошо поучился")
+    })
+    .then((result) => {
+        console.log(result);
+        return goToSleep(true, "Спокойной ночи")
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.log("error", error)
+    })
+_______________________________________________________________________________________________
+
+
+function myDay(time, cb) {
+    setTimeout(() => {
+        time === 7
+        ? cb(null, "Встал вовремя")
+        : cb("Я проспал")
+    }, 500)
+}
+
+function breakfast(haveFood, cb) {
+    console.log("Завтрак");
+    setTimeout(() => {
+        haveFood
+        ? cb(null, "Спасибо за завтрак")
+        : cb("Завтрак не готов")
+    }, 1000)
+}
+
+function goToWork(myWay, cb) {
+    console.log("На работу");
+    setTimeout(() => {
+        myWay
+        ? cb(null, "Успеть на работу")
+        : cb("Опять пробки")
+    }, 2000)
+}
+
+function myWork(electricity, cb) {
+    console.log("Работа");
+    setTimeout(() => {
+        electricity
+        ? cb(null, "Продуктивная работа")
+        : cb("Ура домой")
+    }, 3000)
+}
+
+function lunchBreak(haveTime, cb) {
+    console.log("Обед");
+    setTimeout(() => {
+        haveTime
+        ? cb(null, "Приятного аппетита")
+        : cb("Попью водички")
+    }, 1000)
+}
+
+function wayBackHome(transport, cb) {
+    console.log("Домой");
+    setTimeout(() => {
+        transport
+        ? cb(null, "Быстрее домой")
+        : cb("Ну когда приедет мой автобус")
+    }, 2000)
+}
+
+function haveSupper(supperIsReady, cb) {
+    console.log("Ужин");
+    setTimeout(() => {
+        supperIsReady
+        ? cb(null, "Спасибо за вкусный ужин")
+        : cb("Поужинаю после прогулки")
+    }, 1000)
+}
+
+function walkWithChild(weather, cb) {
+    console.log("Прогулка");
+    setTimeout(() => {
+        weather
+        ? cb(null, "Прекрасная прогулка")
+        : cb("Дождь как жаль")
+    }, 1500)
+}
+
+function myStady(child, cb) {
+    console.log("Учеба");
+    setTimeout(() => {
+        child
+        ? cb(null, "Хорошо поучился")
+        : cb("Ребенок не спит учебу отложим")
+    }, 3000)
+}
+
+function goToSleep(babySleep, cb) {
+    console.log("Спать");
+    setTimeout(() => {
+        babySleep
+        ? cb(null, "Спокойной ночи")
+        : cb("Ребенок еще не спит")
+    }, 500)
+}
+
+myDay(7, (error, data) => {
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(data);
+        breakfast(true, (error, data) => {
+            if(error) {
+                console.log(error);
+            } else {
+                console.log(data);
+                goToWork(true, (error, data) => {
+                    if(error) {
+                        console.log(error);
+                    } else {
+                        console.log(data);
+                        myWork(true, (error, data) => {
+                            if(error) {
+                                console.log(error);
+                            } else {
+                                console.log(data);
+                                lunchBreak(true, (error, data) => {
+                                    if(error) {
+                                        console.log(error);
+                                    } else {
+                                        console.log(data);
+                                        wayBackHome(true, (error, data) => {
+                                            if(error) {
+                                                console.log(error);
+                                            } else {
+                                                console.log(data);
+                                                haveSupper(true, (error, data) => {
+                                                    if(error) {
+                                                        console.log(error);
+                                                    } else {
+                                                        console.log(data);
+                                                        walkWithChild(true, (error, data) => {
+                                                            if(error) {
+                                                                console.log(error);
+                                                            } else {
+                                                                console.log(data);
+                                                                myStady(true, (error, data) => {
+                                                                    if(error) {
+                                                                        console.log(error);
+                                                                    } else {
+                                                                        console.log(data);
+                                                                        goToSleep(true, (error, data) => {
+                                                                            if(error) {
+                                                                                console.log(error)
+                                                                            } else {
+                                                                                console.log(data);
+                                                                                console.log("Хороший был день")
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+})
