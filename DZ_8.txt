@@ -1,0 +1,272 @@
+- Дана textarea.
+В неё вводится текст.
+Сделайте так, чтобы после захода на эту страницу через некоторое время, введенный текст остался в textarea.
+
+const textFeedback = document.getElementById("text");
+textFeedback.value = localStorage.getItem("text");
+textFeedback.oninput = (ev) => {
+    localStorage.setItem("text", ev.target.value);
+}
+
+- Дана форма с инпутами, текстареа, чекбоксами, радио кнопочками, селектами и тп.
+Пользователь вводит какие-то данные и закрывает страницу (не факт, что он заполнил всю форму).
+Сделайте так, чтобы при следующем заходе на страницу введенные им ранее данные стояли на своих местах.
+Сделайте ваш скрипт как можно более универсальным.
+
+<form id="myForm">
+        <input id="text" type="text" value="" name="name">
+        <input id="password" type="password" value="" name="parol">
+        <input id="number" type="number" value="" name="vik">
+        <input id="email" type="email" value="" name="email">
+        <input id="checkbox" type="checkbox"  name="stat">
+        <input id="radio1" type="radio"   name="mova">
+        <input id="radio2" type="radio"   name="mova">
+        <select id="animal" name="animal" multiple>
+            <option value="dog">dog</option>
+            <option value="cat">cat</option>
+            <option value="bird">bird</option>
+        </select>
+        <textarea name="feedback" id="feedback" cols="30" rows="10"></textarea>
+</form>
+
+
+
+const forma = document.getElementById("myForm");
+getElementForm(forma)
+forma.oninput = function saveForm() {
+    saveData(this)
+}
+
+function saveData(tag) {
+    for(let i = 0; i < tag.length; i++) {
+        const tagElement = tag[i];
+        
+        if(tagElement.type === "checkbox" || tagElement.type === "radio") {
+            tagElement.checked
+                ? tagElement.value = true
+                : tagElement.value = false
+        }
+        localStorage.setItem(tagElement.id, tagElement.value);
+    }
+}
+
+function getElementForm(tag) {
+    for(let i = 0; i < localStorage.length; i++) {
+        if (localStorage.hasOwnProperty(tag.children[i].id)) {
+            tag.children[i].value = localStorage.getItem(tag.children[i].id);
+            if(tag.children[i].value === "true") {
+                tag.children[i].setAttribute("checked", "checked");
+            }
+        }
+    }
+}
+
+
+-Дан текстареа. В него можно ввести данные, нажать кнопку "сохранить" и они "фикисруются" (в хранилище), затем поредактировать их, затем еще поредактировать и возможно еще.....
+Требование : хранить историю своих изменений (даже после перезагрузки страницы).
+Сверху над текстареа должны появится стрелочки, с помощью которых можно перемещаться по истории (не забудьте!чекпоинт истории - нажатеи кнопки сохранить).
+
+<div>
+    <input type="button" id="previous" value="Previous">
+    <input type="button" id="next" value="Next">
+
+</div>
+
+<textarea name="text" id="text" cols="30" rows="10"></textarea>
+<br>
+<input type="button" id="save" value="SAVE">
+
+    <script>
+
+const previous = document.getElementById("previous");
+const next = document.getElementById("next");
+const save = document.getElementById("save");
+const text = document.getElementById("text");
+text.value = localStorage.getItem(localStorage.length);
+if (localStorage.length <= 1) {
+    previous.style.visibility = "hidden";
+    next.style.visibility = "hidden";
+}
+
+save.onclick = () => {
+    localStorage.setItem(localStorage.length + 1, text.value);
+    if (localStorage.length > 1) {
+        previous.style.visibility = "visible";
+        next.style.visibility = "visible";        
+    }
+}
+
+previous.onclick = () => {
+    next.style.visibility = "visible";
+    let index;
+    for (const key in localStorage) {
+        if(localStorage.hasOwnProperty(key)) {
+            if(localStorage.getItem(key) === text.value) {
+                index = key
+            }
+        }
+    }
+    if (index === "1") {
+        previous.style.visibility = "hidden";
+        return
+    }
+    text.value = localStorage.getItem(index - 1);
+}
+
+next.onclick = () => {
+    previous.style.visibility = "visible";
+    let index;
+    for (const key in localStorage) {
+        if(localStorage.hasOwnProperty(key)) {
+            if(localStorage.getItem(key) === text.value) {
+                index = key
+            }
+        }
+    }
+    if (index === localStorage.length.toString()) {
+        next.style.visibility = "hidden";
+        return
+    }
+    text.value = localStorage.getItem(+index + 1);
+}
+
+
+- Реализуйте записную книгу, хранящую данные в локальном хранилище.
+Данные которые надо сохранять : ФИО, номер, почта, фирма, отдел, день рождения
+Данные вводить через соответсвующую форму.
+--Каждому контакту добавить кнопку для удаления контакта.
+--Каждому контакту добавить кнопку редактироваиня. При нажати на нее появляется форма, в которой есть все необходимые инпуты для редактирования, которые уже заполнены данными объекта
+
+<form id="myForm">
+
+    <label>ФИО</label>
+    <br>
+    <input type="text" name="fio">
+    <br>
+    <label>Телефон</label>
+    <br>
+    <input type="tel" name="phone">
+    <br>
+    <label>Email</label>
+    <br>
+    <input type="email" name="email">
+    <br>
+    <label>Фирма</label>
+    <br>
+    <input type="text" name="firm">
+    <br>
+    <label>Отдел</label>
+    <br>
+    <input type="text" name="department">
+    <br>
+    <label>Дата рождения</label>
+    <br>
+    <input type="date" name="birthday">
+    <br>
+    <br>
+    <input type="submit" name="save">
+    <button type="submit" name="edit">Изменить</button>
+    <br>
+</form>
+
+
+
+const usersArray = "usersArray";
+let tempId;
+const forma = document.forms.myForm;
+forma.edit.style.visibility = "hidden";
+getUser()
+
+forma.save.onclick = () => {
+    let user = {};
+    for (let i = 0; i < forma.children.length; i++) {
+        const element = forma.children[i];
+        if (element.name && element.type !== "submit") {
+            user[element.name] = element.value;
+        }
+    }
+    user.id = (user.fio.length + 1) * Math.floor(Math.random() * 100000);;
+    saveUser(user);
+}
+
+function saveUser(user) {
+    if(localStorage.hasOwnProperty(usersArray)) {
+        const users = JSON.parse(localStorage.getItem(usersArray));
+        users.push(user);
+        localStorage.setItem(usersArray, JSON.stringify(users));
+    } else {
+        localStorage.setItem(usersArray, JSON.stringify([user]))
+    }
+}
+
+function getUser() {
+    if (localStorage.hasOwnProperty(usersArray)) {
+        const users = JSON.parse(localStorage.getItem(usersArray))
+        for (const iter of users) {
+            const divkaNotebook = document.createElement("div");
+            divkaNotebook.style = "width:300px; border: 3px solid green; float:left";
+            document.body.appendChild(divkaNotebook);
+            for (const element in iter) {
+                if (element !== "id") {
+                    const tegP = document.createElement("p");
+                    divkaNotebook.appendChild(tegP);
+                    tegP.innerText = element + ":" + iter[element];
+                }
+            }
+            const btnEdit = document.createElement("button");
+            const btnDelete = document.createElement("button");
+            btnEdit.innerText = "Редактировать";
+            btnDelete.innerText = "Удалить";
+            divkaNotebook.appendChild(btnEdit);
+            divkaNotebook.appendChild(btnDelete);
+            btnEdit.onclick = () => {
+                editUser(iter.id);
+            }
+            btnDelete.onclick = () => {
+                deleteUser(iter.id);
+            }
+        }
+    }
+}
+
+function deleteUser(id) {
+    const array = JSON.parse(localStorage.getItem(usersArray));
+    const find = array.filter(user => user.id !== id);
+    localStorage.setItem(usersArray, JSON.stringify(find));
+}
+
+function editUser(id) {
+    forma.edit.style.visibility = "visible";
+    tempId = id;
+    const array = JSON.parse(localStorage.getItem(usersArray));
+    const find = array.find(user => user.id === id);
+    for (let i = 0; i < myForm.children.length; i++) {
+        const element = myForm.children[i];
+        if (element.name && element.type !== "submit") {
+            for (const key in find) {
+                if (element.name === key) {
+                    element.value = find[key]
+                }
+            }
+        }
+    }
+}
+
+
+forma.edit.onclick = () => {
+    let user = {};
+    for (let i = 0; i < forma.children.length; i++) {
+        const element = forma.children[i];
+        if (element.name && element.type !== "submit") {
+            user[element.name] = element.value;
+        }
+    }
+    user.id = tempId;
+    const users = JSON.parse(localStorage.getItem(usersArray));
+    const target = users.find(value => value.id === user.id);
+    if (target) {
+        const filter = users.filter(value => value.id !== user.id);
+        filter.push(user);
+        localStorage.setItem(usersArray, JSON.stringify(filter));
+    }
+}
