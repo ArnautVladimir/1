@@ -1,0 +1,99 @@
+function userCard(num) {
+    const key = Math.round((1 + 1/num)*1000000);
+    let balance = 100;
+    let transactionLimit = 100;
+    let historyLogs = [];
+    
+    function getKey() {
+        return key;
+    }
+    function getBalance() {
+        return balance;
+    }
+    function setBalance(newBalance) {
+        balance = newBalance;
+    }
+    function getTransactionLimit() {
+        return transactionLimit;
+    }
+    function setTransactionLimit(newTransactionLimit) {
+        transactionLimit = newTransactionLimit;
+        const operation = {};
+        operation.operationType = "Изменение кредитного лимита";
+        operation.credits = newTransactionLimit;
+        operation.operationTime = new Date().toLocaleString();
+        this.getCardOptions().historyLogs.push(operation);
+    }
+    function getHistoryLogs() {
+        return historyLogs
+    }
+    function setHistoryLogs() {
+        return historyLogs
+    }
+
+    function getCardOptions() {
+        const options = {}
+        options.key = this.getKey();
+        options.balance = this.getBalance();
+        options.transactionLimit = this.getTransactionLimit();
+        options.historyLogs = this.getHistoryLogs();
+        
+        return options
+    }
+    function putCredits(newBalance) {
+        setBalance(this.getBalance() + newBalance);
+        const operation = {};
+        operation.operationType = "Пополнение средств";
+        operation.credits = newBalance;
+        operation.operationTime = new Date().toLocaleString();
+        this.getCardOptions().historyLogs.push(operation); 
+    }
+    function takeCredit(money) {
+        if (money <= this.getBalance() && money <= this.getTransactionLimit()) {
+            setBalance(this.getBalance() - money);
+            const operation = {};
+            operation.operationType = "Снятие средств";
+            operation.credits = money;
+            operation.operationTime = new Date().toLocaleString();
+            this.getCardOptions().historyLogs.push(operation);            
+        } else {
+            console.error("Недостаточно средств на карте!")
+        }
+    }
+    function transferCredits(money, card) {
+        let transfer = money + money*0.005;
+        this.takeCredit(transfer);
+        card.putCredits(transfer - money*0.005);           
+    }
+    
+    return {
+        getKey,
+        getBalance,
+        getTransactionLimit,
+        setBalance,
+        setTransactionLimit,
+        getHistoryLogs,
+        setHistoryLogs,
+        getCardOptions,
+        putCredits,
+        takeCredit,
+        transferCredits
+    }
+}
+
+class User {
+    constructor(name) {
+        this.name = name,
+        this.cards = []
+    }
+
+    addCard(num) {
+        (this.cards.length === 3)
+        ? console.error("Не более трех карт")
+        : this.cards.push(userCard(num))
+    }
+
+    getCardByKey(key)  {
+        return this.cards[key - 1];
+    }   
+}
